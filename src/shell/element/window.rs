@@ -57,7 +57,7 @@ use wayland_backend::server::ObjectId;
 
 use super::CosmicSurface;
 
-pub const SSD_HEIGHT: i32 = 36;
+pub const SSD_HEIGHT: i32 = 0;
 pub const RESIZE_BORDER: i32 = 10;
 
 #[derive(Clone, PartialEq, Eq, Hash)]
@@ -546,25 +546,26 @@ impl Program for CosmicWindowInternal {
     }
 
     fn view(&self) -> cosmic::Element<'_, Self::Message> {
-        let mut header = cosmic::widget::header_bar()
-            .start(cosmic::widget::horizontal_space().width(32))
-            .title(self.last_title.lock().unwrap().clone())
-            .on_drag(Message::DragStart)
-            .on_close(Message::Close)
-            .focused(self.window.is_activated(false))
-            .on_double_click(Message::Maximize)
-            .on_right_click(Message::Menu);
+        // let mut header = cosmic::widget::header_bar()
+        //     .start(cosmic::widget::horizontal_space().width(32))
+        //     .title(self.last_title.lock().unwrap().clone())
+        //     .on_drag(Message::DragStart)
+        //     .on_close(Message::Close)
+        //     .focused(self.window.is_activated(false))
+        //     .on_double_click(Message::Maximize)
+        //     .on_right_click(Message::Menu);
 
-        if cosmic::config::show_minimize() {
-            header = header
-                .on_minimize(Message::Minimize)
-                .start(cosmic::widget::horizontal_space().width(40)); // 32 + 8 spacing
-        }
-        if cosmic::config::show_maximize() {
-            header = header
-                .on_maximize(Message::Maximize)
-                .start(cosmic::widget::horizontal_space().width(40)); // 32 + 8 spacing
-        }
+        // if cosmic::config::show_minimize() {
+        //     header = header
+        //         .on_minimize(Message::Minimize)
+        //         .start(cosmic::widget::horizontal_space().width(40)); // 32 + 8 spacing
+        // }
+        // if cosmic::config::show_maximize() {
+        //     header = header
+        //         .on_maximize(Message::Maximize)
+        //         .start(cosmic::widget::horizontal_space().width(40)); // 32 + 8 spacing
+        // }
+        let header = cosmic::widget::row();
 
         header.into()
     }
