@@ -58,7 +58,7 @@ use wayland_backend::server::ObjectId;
 
 use super::CosmicSurface;
 
-pub const SSD_HEIGHT: i32 = 36;
+pub const SSD_HEIGHT: i32 = 0;
 pub const RESIZE_BORDER: i32 = 10;
 
 #[derive(Clone, PartialEq, Eq, Hash)]
@@ -555,21 +555,22 @@ pub struct DefaultDecorations;
 
 impl Decorations<CosmicWindowInternal, Message> for DefaultDecorations {
     fn view(&self, win: &CosmicWindowInternal) -> cosmic::Element<'_, Message> {
-        let mut header = cosmic::widget::header_bar()
-            .title(win.last_title.lock().unwrap().clone())
-            .on_drag(Message::DragStart)
-            .on_close(Message::Close)
-            .focused(win.window.is_activated(false))
-            .on_double_click(Message::Maximize)
-            .on_right_click(Message::Menu)
-            .is_ssd(true);
-
-        if cosmic::config::show_minimize() {
-            header = header.on_minimize(Message::Minimize)
-        }
-        if cosmic::config::show_maximize() {
-            header = header.on_maximize(Message::Maximize)
-        }
+        // let mut header = cosmic::widget::header_bar()
+        //     .title(win.last_title.lock().unwrap().clone())
+        //     .on_drag(Message::DragStart)
+        //     .on_close(Message::Close)
+        //     .focused(win.window.is_activated(false))
+        //     .on_double_click(Message::Maximize)
+        //     .on_right_click(Message::Menu)
+        //     .is_ssd(true);
+        //
+        // if cosmic::config::show_minimize() {
+        //     header = header.on_minimize(Message::Minimize)
+        // }
+        // if cosmic::config::show_maximize() {
+        //     header = header.on_maximize(Message::Maximize)
+        // }
+        let header = cosmic::widget::row();
 
         header.into()
     }
