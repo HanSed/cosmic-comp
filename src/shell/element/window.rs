@@ -1,6 +1,5 @@
 use crate::{
     backend::render::{
-        IndicatorShader, Key, Usage,
         clipped_surface::ClippedSurfaceRenderElement,
         cursor::CursorState,
         element::{AsGlowRenderer, FromGlesError},
@@ -174,7 +173,7 @@ impl CosmicWindowInternal {
 
     /// returns if the window has any current or pending server-side decorations
     pub fn has_ssd(&self, pending: bool) -> bool {
-        !self.window.is_decorated(pending)
+        false
     }
 
     /// returns if the window is currently tiled
@@ -497,24 +496,6 @@ impl CosmicWindow {
         }
         if let Some(max_size) = max_size {
             geo.size = geo.size.clamp(Size::default(), max_size.to_f64());
-        }
-
-        if (has_ssd || clip) && !is_maximized {
-            let window_key =
-                CosmicMappedKey(CosmicMappedKeyInner::Window(Arc::downgrade(&self.0.0)));
-
-            let (r, g, b, a) = bg_divider.into_components();
-            let elem = CosmicWindowRenderElement::Border(IndicatorShader::element(
-                renderer,
-                Key::Window(Usage::Border, window_key.clone()),
-                geo.to_i32_round().as_local(),
-                1,
-                radii,
-                a * alpha,
-                scale.x,
-                [r, g, b],
-            ));
-            elements.push(elem);
         }
 
         let window_elements = self.0.with_program(|p| {
